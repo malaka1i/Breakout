@@ -19,6 +19,9 @@ Ball::Ball(level* l): QObject(){
      timer = new QTimer();
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
 
+    health = 3;
+    score = 0;
+
 }
 
 
@@ -26,12 +29,15 @@ Ball::Ball(level* l): QObject(){
 void Ball:: stop(){
     if(on){
         timer-> stop();
+        on = !on;
     }
 }
 
 void Ball:: start(){
-    if(!on)
+    if(!on){
         timer->start(15);
+        on = !on;
+    }
 }
 
 void Ball::move(){
@@ -69,7 +75,15 @@ void Ball::reverseVelocityIfOutOfBounds(){
         yVelocity = -1 * yVelocity;
     }
 
-    // bottom edge - NONE (can fall through bottom)
+    // bottom edge
+    if(mapToScene(boundingRect().topLeft()).y() >= screenH && health > 0){
+        health--;
+        qDebug() << "health is now" << health;
+        stop();
+        level1->gameStarted= false;
+        setPos(500 , 400);
+        level1->paddle->setPos( 480, 495);
+    }
 }
 
 void Ball::handlePaddleCollision(){
@@ -130,6 +144,8 @@ void Ball::handleBlockCollision(){
             // delete block(s)
             level1->scene->removeItem(block);
             delete block;
+            score ++;
+            qDebug() << "score is now" << score;
         }
     }
 }

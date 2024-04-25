@@ -44,8 +44,10 @@ void level:: render(){
     paddle->setPos( 480, 495);
     scene->addItem(paddle);
 
-    ball->setPos(500 , 470);
+
     scene->addItem(ball);
+    ball->setPos(500 , 470);
+
 }
 
 

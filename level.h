@@ -19,8 +19,6 @@ class level : public QGraphicsView
     Object* objects[12][12];
     int indeces[12][12];
     Ball* ball;
-    Paddle* paddle;
-    bool gameStarted;
 
 public:
 
@@ -29,6 +27,8 @@ public:
     void render();
     void setIDs();
     void StartGame();
+    bool gameStarted;
+    Paddle* paddle;
 
 public slots:
     void mouseMoveEvent(QMouseEvent* event) override;
@@ -39,13 +39,14 @@ public slots:
         // If the mouse is clicked, stop the timer and start the game
         if (!gameStarted) {
             timer->stop();
+            paddle->setPos( 480, 495);
             ball->start();
-          qDebug() << "Mouse clicked! Timer stopped. Starting the game...";
+            qDebug() << "Mouse clicked! Timer stopped. Starting the game...";
             gameStarted = true;
             // Implement your game logic here
             }
 
-    }
+        }
 
 
 private slots:

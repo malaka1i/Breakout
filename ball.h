@@ -21,6 +21,8 @@ public:
     Ball(level* l);
     void stop();
     void start();
+    int health;
+    int score;
 
 public slots:
     // public slots
