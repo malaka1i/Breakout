@@ -6,6 +6,7 @@
 
 level::level(){
 
+
     gameStarted = false;
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &level::handleTimeout);
@@ -18,8 +19,6 @@ level::level(){
     setScene(scene);
     setSceneRect(0,0,960,540);
     paddle = new Paddle;
-
-
 }
 
 //a function to set positions for each object to its place on the screen
@@ -47,6 +46,19 @@ void level:: render(){
 
     scene->addItem(ball);
     ball->setPos(500 , 470);
+
+    scoretxt = scene-> addText("Score: 0");
+    scoretxt->setDefaultTextColor(Qt::red);
+    scoretxt->setPos(600,10);
+    scene->addItem(scoretxt);
+
+    healthtxt = scene-> addText("Health: 3");
+    healthtxt->setDefaultTextColor(Qt::blue);
+    healthtxt->setPos(600,20);
+    scene->addItem(healthtxt);
+
+
+
 
 }
 
@@ -87,6 +99,12 @@ void level :: StartGame(){
 
     setIDs();
     render();
+    connect(ball, SIGNAL(gameOver()), this, SLOT(handleGameOver()));
+
 }
 
+
+void level::handleGameOver() {
+    gameover = new GameOver(scene);
+}
 

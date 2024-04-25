@@ -2,6 +2,7 @@
 #define LEVEL_H
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsTextItem>
 #include <QGraphicsScene>
 #include <QMouseEvent>
 #include <QObject>
@@ -10,6 +11,7 @@
 #include "paddle.h"
 #include "blocks.h"
 #include<QTimer>
+#include "GameOver.h"
 
 using namespace std;
 class level : public QGraphicsView
@@ -19,6 +21,7 @@ class level : public QGraphicsView
     Object* objects[12][12];
     int indeces[12][12];
     Ball* ball;
+    GameOver* gameover;
 
 public:
 
@@ -29,6 +32,9 @@ public:
     void StartGame();
     bool gameStarted;
     Paddle* paddle;
+   QGraphicsTextItem* scoretxt;
+   QGraphicsTextItem* healthtxt;
+
 
 public slots:
     void mouseMoveEvent(QMouseEvent* event) override;
@@ -48,6 +54,8 @@ public slots:
 
         }
 
+    void handleGameOver();
+
 
 private slots:
     void handleTimeout()
@@ -55,6 +63,10 @@ private slots:
         StartGame();
         timer->disconnect();
     }
+
+
+
+
 };
 
 #endif // LEVEL_H

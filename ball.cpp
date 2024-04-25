@@ -78,6 +78,11 @@ void Ball::reverseVelocityIfOutOfBounds(){
     // bottom edge
     if(mapToScene(boundingRect().topLeft()).y() >= screenH && health > 0){
         health--;
+        level1->healthtxt->setPlainText("Health: " + QString::number(health));
+
+        if (health == 0) {
+            emit gameOver();
+        }
         qDebug() << "health is now" << health;
         stop();
         level1->gameStarted= false;
@@ -145,6 +150,7 @@ void Ball::handleBlockCollision(){
             level1->scene->removeItem(block);
             delete block;
             score ++;
+            level1->scoretxt->setPlainText("Score: " + QString::number(score));
             qDebug() << "score is now" << score;
         }
     }

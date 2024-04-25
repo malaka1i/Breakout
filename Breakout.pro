@@ -18,6 +18,7 @@ SOURCES += \
     paddle.cpp
 
 HEADERS += \
+    GameOver.h \
     ball.h \
     blocks.h \
     game.h \

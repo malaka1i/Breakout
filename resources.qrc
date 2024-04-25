@@ -50,5 +50,7 @@
         <file>purpleblock.png</file>
         <file>redblock.png</file>
         <file>yellowblock.png</file>
+        <file>GameOver.png</file>
+        <file>gameover.jpg</file>
     </qresource>
 </RCC>

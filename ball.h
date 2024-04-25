@@ -1,6 +1,7 @@
 #ifndef BALL_H
 #define BALL_H
 #include <object.h>
+#include <QGraphicsTextItem>
 #include<QTimer>
 class level;
 class Ball:public QObject,  public Object
@@ -24,9 +25,13 @@ public:
     int health;
     int score;
 
+
 public slots:
     // public slots
     void move();
+
+signals:
+    void gameOver();
 };
 
 #endif // BALL_H
