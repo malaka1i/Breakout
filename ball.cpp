@@ -3,7 +3,9 @@
 
 Ball::Ball(level* l): QObject(){
 
+    //movement of ball bool
     on = false;
+
     name = "ball";
     level1 = l;
     id = 3;
@@ -21,6 +23,19 @@ Ball::Ball(level* l): QObject(){
 
     health = 3;
     score = 0;
+
+
+
+    for (int i = 0; i < health; ++i) {
+        QPixmap healthPixmap(":/new/images/health.png");
+        healthPixmap = healthPixmap.scaled(20, 20);
+        QGraphicsPixmapItem* healthTemp = new QGraphicsPixmapItem;
+        healthTemp->setPixmap(healthPixmap);
+        healthItems.push_back(healthTemp); // Add the health item to the scene and vector
+        healthItems[i]->setPos(healthItemPositionX + i * healthItemSpacing, healthItemPositionY); // Set the position of the health item
+        level1 -> scene->addItem(healthItems[i]);
+
+    }
 
 }
 
@@ -77,9 +92,7 @@ void Ball::reverseVelocityIfOutOfBounds(){
 
     // bottom edge
     if(mapToScene(boundingRect().topLeft()).y() >= screenH && health > 0){
-        health--;
-        level1->healthtxt->setPlainText("Health: " + QString::number(health));
-
+        loseHealth();
         if (health == 0) {
             emit gameOver();
         }
@@ -100,6 +113,7 @@ void Ball::handlePaddleCollision(){
 
             // reverse the y velocity
             yVelocity = -1 * yVelocity;
+
 
             // add to x velocity depending on where it hits the paddle
             double ballX = getCenterX();
@@ -156,3 +170,19 @@ void Ball::handleBlockCollision(){
     }
 }
 
+void Ball :: addHealthItem() {
+    if (health < 3) { // Check if health is not already at maximum
+        health++; // Increase health
+        healthItems[health - 1]->setPixmap(QPixmap(":/new/images/filled_heart.png")); // Replace with your filled health item image
+        healthItems[health - 1]->setPos(healthItemPositionX, healthItemPositionY - health * healthItemSpacing); // Adjust the position of the added health item
+    }
+}
+
+
+void Ball :: loseHealth() {
+    if (health > 0) { // Check if health is not already zero
+        health--; // Decrease health
+        healthItems[health]->setPixmap(QPixmap(":/new/images/empty_heart.png")); // Replace with your empty health item image
+        healthItems[health]->setPos(healthItemPositionX, healthItemPositionY + health * healthItemSpacing); // Adjust the position of the removed health item
+    }
+}

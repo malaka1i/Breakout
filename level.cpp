@@ -52,10 +52,7 @@ void level:: render(){
     scoretxt->setPos(600,10);
     scene->addItem(scoretxt);
 
-    healthtxt = scene-> addText("Health: 3");
-    healthtxt->setDefaultTextColor(Qt::blue);
-    healthtxt->setPos(600,20);
-    scene->addItem(healthtxt);
+
 
 
 
