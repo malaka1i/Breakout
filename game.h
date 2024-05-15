@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include <QMainWindow>
-#include "level.h"
+#include "level1.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class Game;

@@ -1,31 +1,17 @@
-#include "level.h"
-
+#include "level2.h"
+#include "ball.h"
 //the screen will be like a 12x12 matrix
 #define ROW 12
 #define COL 12
 
-level::level(){
-
-
-    gameStarted = false;
-    timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &level::handleTimeout);
-    timer->start();
-
-    setMouseTracking(true);
-
-    //creating a scene
-    scene = new QGraphicsScene();
-    setScene(scene);
-    setSceneRect(0,0,960,540);
-    paddle = new Paddle;
+level2::level2(){
 }
 
 //a function to set positions for each object to its place on the screen
-void level:: render(){
+void level2:: render(){
     //a vector of the colors of the blocks
     QVector<QString> BlockImgs = {"blue", "brown", "darkgreen", "green", "grey", "lightblue", "orange", "purple", "red", "yellow"};
-
+    QVector<QString> BrokenBlockImgs = {"blue", "brown", "darkgreen", "green", "grey", "lightblue", "orange", "purple", "red", "yellow"}; //might delete later
     srand(time(0));
 
     //traverse the matrix and fill in the ids of the blocks in their place
@@ -34,7 +20,15 @@ void level:: render(){
             if (indeces[i][j]==1){
                 int colorindex=rand()% BlockImgs.length();
                 objects[i][j]= new Blocks(BlockImgs[colorindex]);
-                objects[i][j]->setPos( i*80,  j*45);
+
+                objects[i][j]->setPos( i*80,  j*45); //j originally 45
+                scene->addItem(objects[i][j]);
+            }
+            else if(indeces[i][j] == 2){
+                int colorindex=rand()% BrokenBlockImgs.length();
+                objects[i][j]= new HardBlocks(BrokenBlockImgs[colorindex]);
+
+                objects[i][j]->setPos( i*80,  j*45); //j originally 45
                 scene->addItem(objects[i][j]);
             }
         }
@@ -52,22 +46,19 @@ void level:: render(){
     scoretxt->setPos(600,10);
     scene->addItem(scoretxt);
 
-
-
-
-
-
 }
 
 
-void level :: setIDs(){
+void level2 :: setIDs(){
 
-   //setting the ids if different objects
+    //setting the ids if different objects
     for (int i =0; i<ROW; i++){
         for (int j=0; j<COL; j++){
             if (j>0 && j <= 5){
-                //1 is a block
-                indeces[i][j]=1 ;
+                if(i%3==0 & j%2==0){
+                    indeces [i][j] = 2;
+
+                }else indeces[i][j]=1 ;
             }
             //0 means it's empty
             else indeces[i][j] = 0 ;
@@ -75,33 +66,7 @@ void level :: setIDs(){
         }
     }
 
-    indeces[COL/2][ROW-2]=2;
-}
-
-void level::mouseMoveEvent(QMouseEvent* event){
-    if(gameStarted){
-        QPointF temp = mapToScene(event->pos());
-
-        QPointF mousePos = temp.toPoint();
-        qreal cursor = mousePos.x();
-        paddle->setPos(cursor, paddle->y());
-
-    }
-
-}
-
-void level :: StartGame(){
-
-    ball = new Ball(this);
-
-    setIDs();
-    render();
-    connect(ball, SIGNAL(gameOver()), this, SLOT(handleGameOver()));
-
 }
 
 
-void level::handleGameOver() {
-    gameover = new GameOver(scene);
-}
 

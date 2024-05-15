@@ -11,7 +11,12 @@ CONFIG += c++17
 SOURCES += \
     ball.cpp \
     blocks.cpp \
-    level.cpp \
+    hardblocks.cpp \
+    level1.cpp \
+    level2.cpp \
+    level3.cpp \
+    level4.cpp \
+    level5.cpp \
     main.cpp \
     game.cpp \
     object.cpp \
@@ -22,7 +27,12 @@ HEADERS += \
     ball.h \
     blocks.h \
     game.h \
-    level.h \
+    hardblocks.h \
+    level1.h \
+    level2.h \
+    level3.h \
+    level4.h \
+    level5.h \
     object.h \
     paddle.h
 

@@ -3,14 +3,21 @@
 #include <object.h>
 #include <QGraphicsTextItem>
 #include<QTimer>
-class level;
+// #include "level3.h"
+// #include "level4.h"
+// #include "level5.h"
+#include "hardblocks.h"
+
+class level1;
+
 class Ball:public QObject,  public Object
 {
 
     Q_OBJECT
+private:
     double xVelocity;
     double yVelocity;
-    level*  level1;
+    level1* l1;
     QTimer* timer;
     bool on;
 
@@ -23,7 +30,7 @@ class Ball:public QObject,  public Object
     const int healthItemPositionX = 10; // X-coordinate for health item position
     const int healthItemPositionY = 10; // Y-coordinate for health item position
 public:
-    Ball(level* l);
+    Ball(level1* l1);
     void stop();
     void start();
     int health;

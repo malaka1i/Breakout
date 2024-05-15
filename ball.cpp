@@ -1,14 +1,17 @@
 #include "ball.h"
-#include "level.h"
+#include "level1.h"
+// #include "level2.h"
 
-Ball::Ball(level* l): QObject(){
+// extern level1* l1;
+
+Ball::Ball(level1* l): QObject(){
 
     //movement of ball bool
     on = false;
 
     name = "ball";
-    level1 = l;
-    id = 3;
+    l1 = l;
+    id = 4;
     QPixmap ballPic(":/new/images/Ball.png");
     ballPic = ballPic.scaled(25,25);
     setPixmap(ballPic);
@@ -33,7 +36,7 @@ Ball::Ball(level* l): QObject(){
         healthTemp->setPixmap(healthPixmap);
         healthItems.push_back(healthTemp); // Add the health item to the scene and vector
         healthItems[i]->setPos(healthItemPositionX + i * healthItemSpacing, healthItemPositionY); // Set the position of the health item
-        level1 -> scene->addItem(healthItems[i]);
+        l1 -> scene->addItem(healthItems[i]);
 
     }
 
@@ -72,8 +75,8 @@ void Ball::move(){
 
 void Ball::reverseVelocityIfOutOfBounds(){
     // check if out of bound, if so, reverse the proper velocity
-    double screenW = level1->width();
-    double screenH = level1->height();
+    double screenW = l1->width();
+    double screenH = l1->height();
 
     // left edge
     if (mapToScene(boundingRect().topLeft()).x() <= 0){
@@ -98,9 +101,9 @@ void Ball::reverseVelocityIfOutOfBounds(){
         }
         qDebug() << "health is now" << health;
         stop();
-        level1->gameStarted= false;
+        l1->gameStarted= false;
         setPos(500 , 400);
-        level1->paddle->setPos( 480, 495);
+        l1->paddle->setPos( 480, 495);
     }
 }
 
@@ -111,18 +114,19 @@ void Ball::handlePaddleCollision(){
         if (paddle){
             // collides with paddle
 
-            // reverse the y velocity
-            yVelocity = -1 * yVelocity;
+                // reverse the y velocity
+                yVelocity = -1 * yVelocity;
 
 
-            // add to x velocity depending on where it hits the paddle
-            double ballX = getCenterX();
-            double paddleX = paddle->getCenterX();
+                // add to x velocity depending on where it hits the paddle
+                double ballX = getCenterX();
+                double paddleX = paddle->getCenterX();
 
-            double dvx = ballX - paddleX;
-            xVelocity = (xVelocity + dvx)/15;
+                double dvx = ballX - paddleX;
+                xVelocity = (xVelocity + dvx)/15;
 
-            return;
+                return;
+
         }
     }
 }
@@ -139,6 +143,15 @@ void Ball::handleBlockCollision(){
             double bally = pos().y();
             double blockx = block->pos().x();
             double blocky = block->pos().y();
+
+            HardBlocks* hardblock = dynamic_cast<HardBlocks*>(cItems[i]);
+            if (hardblock) {
+                if(hardblock->isHitOnce){
+                    score++;
+                }
+                hardblock->handleCollision();
+
+            }
 
             // collides from bottom
             if (bally > blocky + yPad && yVelocity < 0){
@@ -161,10 +174,14 @@ void Ball::handleBlockCollision(){
             }
 
             // delete block(s)
-            level1->scene->removeItem(block);
-            delete block;
-            score ++;
-            level1->scoretxt->setPlainText("Score: " + QString::number(score));
+            if(!hardblock){
+                l1->scene->removeItem(block);
+                delete block;
+                score ++;
+            }
+
+
+            l1->scoretxt->setPlainText("Score: " + QString::number(score));
             qDebug() << "score is now" << score;
         }
     }
