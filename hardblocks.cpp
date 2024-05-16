@@ -15,11 +15,8 @@ void HardBlocks:: handleCollision() {
     } else {
 
         if(collisionCount == 0) {
-
             isHitOnce = true;
             pixmap() = changedPixmap;
-
-
         }
 
         collisionCount++;

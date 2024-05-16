@@ -52,5 +52,6 @@
         <file>yellowblock.png</file>
         <file>GameOver.png</file>
         <file>gameover.jpg</file>
+        <file>steelbarrier.png</file>
     </qresource>
 </RCC>

@@ -3,10 +3,10 @@
 #include <object.h>
 #include <QGraphicsTextItem>
 #include<QTimer>
-// #include "level3.h"
-// #include "level4.h"
-// #include "level5.h"
 #include "hardblocks.h"
+#include "bombblocks.h"
+#include "deadlyblocks.h"
+#include "barrier.h"
 
 class level1;
 
@@ -26,6 +26,7 @@ private:
     void reverseVelocityIfOutOfBounds();
     void handlePaddleCollision();
     void handleBlockCollision();
+    void handleBarrierCollision();
     const int healthItemSpacing = 20; // Spacing between health items
     const int healthItemPositionX = 10; // X-coordinate for health item position
     const int healthItemPositionY = 10; // Y-coordinate for health item position

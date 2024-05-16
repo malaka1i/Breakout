@@ -10,7 +10,10 @@ CONFIG += c++17
 
 SOURCES += \
     ball.cpp \
+    barrier.cpp \
     blocks.cpp \
+    bombblocks.cpp \
+    deadlyblocks.cpp \
     hardblocks.cpp \
     level1.cpp \
     level2.cpp \
@@ -25,7 +28,10 @@ SOURCES += \
 HEADERS += \
     GameOver.h \
     ball.h \
+    barrier.h \
     blocks.h \
+    bombblocks.h \
+    deadlyblocks.h \
     game.h \
     hardblocks.h \
     level1.h \

@@ -13,11 +13,6 @@ public:
         setPixmap(QPixmap(":/new/images/GameOver.png"));
         setPos(scene->width() / 2 - pixmap().width() / 2, scene->height() / 2 - pixmap().height() / 2);
         scene->addItem(this);
-
-        // Create a new timer and connect the timeout signal to the fadeOut slot
-        // connect(timer, &QTimer::timeout, this, &GameOver::fadeOut);
-        // timer->setSingleShot(true); // Set the timer to single shot mode
-        // timer->start(3000); // Start the timer with a delay of 3000 milliseconds
     }
 
     // void fadeOut() {

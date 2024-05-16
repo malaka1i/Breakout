@@ -4,7 +4,9 @@
 class Blocks : public Object {
     QString blockColor;
 public:
-    Blocks(QString);
+    Blocks(QString = "");
+    std::vector<Blocks*> findAdjacentBlocks();
+    void setBlockScale(int H, int W);
 };
 
 #endif // BLOCKS_H

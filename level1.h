@@ -10,7 +10,6 @@
 
 #include "paddle.h"
 #include "blocks.h"
-#include "hardblocks.h"
 #include<QTimer>
 #include "GameOver.h"
 class Ball;
@@ -44,18 +43,12 @@ public slots:
 
     void mousePressEvent(QMouseEvent *event) override;
         void handleGameOver();
-
-
     protected slots:
         void handleTimeout()
         {
             StartGame();
             timer->disconnect();
         }
-
-
-
-
     };
 
 

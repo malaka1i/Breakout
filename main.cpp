@@ -1,5 +1,5 @@
 // #include "game.h"
-#include "level1.h"
+#include "level2.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     // Game w;
     // w.show();
 
-    level1* l1 = new level1;
+    level2* l1 = new level2;
     l1->show();
     return a.exec();
 }

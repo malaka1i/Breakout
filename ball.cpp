@@ -1,8 +1,11 @@
 #include "ball.h"
 #include "level1.h"
-// #include "level2.h"
+#include "level2.h"
+#include "level3.h"
+#include "level4.h"
+//#include "level5.h"
 
-// extern level1* l1;
+
 
 Ball::Ball(level1* l): QObject(){
 
@@ -150,7 +153,16 @@ void Ball::handleBlockCollision(){
                     score++;
                 }
                 hardblock->handleCollision();
+            }
 
+            BombBlocks* bombBlock = qgraphicsitem_cast<BombBlocks*>(cItems[i]);
+            if (bombBlock) {
+                bombBlock->handleCollision(l1);
+            }
+
+            DeadlyBlocks* deadlyblock = qgraphicsitem_cast<DeadlyBlocks*>(cItems[i]);
+            if (deadlyblock) {
+                emit gameOver();
             }
 
             // collides from bottom
@@ -186,6 +198,31 @@ void Ball::handleBlockCollision(){
         }
     }
 }
+
+void Ball::handleBarrierCollision(){
+    QList<QGraphicsItem*> cItems = collidingItems();
+    for (size_t i = 0, n = cItems.size(); i < n; ++i){
+        Barrier* barrier = dynamic_cast<Barrier*>(cItems[i]);
+        if (barrier){
+            // collides with barrier
+
+            // reverse the y velocity
+            yVelocity = -1 * yVelocity;
+
+
+            // add to x velocity depending on where it hits the barrier
+            double ballX = getCenterX();
+            double barrierX = barrier->getCenterX();
+
+            double dvx = ballX - barrierX;
+            xVelocity = (xVelocity + dvx)/15;
+
+            return;
+
+        }
+    }
+}
+
 
 void Ball :: addHealthItem() {
     if (health < 3) { // Check if health is not already at maximum

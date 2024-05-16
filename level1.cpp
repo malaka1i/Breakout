@@ -77,8 +77,6 @@ void level1 :: setIDs(){
 
         }
     }
-
-    indeces[COL/2][ROW-2]=2;
 }
 
 void level1::mouseMoveEvent(QMouseEvent* event){

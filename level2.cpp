@@ -4,8 +4,7 @@
 #define ROW 12
 #define COL 12
 
-level2::level2(){
-}
+level2::level2(){}
 
 //a function to set positions for each object to its place on the screen
 void level2:: render(){

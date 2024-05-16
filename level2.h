@@ -2,8 +2,7 @@
 #define LEVEL2_H
 
 #include "level1.h"
-
-
+#include "hardblocks.h"
 using namespace std;
 
 class level2 : public level1
